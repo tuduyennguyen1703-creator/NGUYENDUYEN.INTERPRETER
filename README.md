@@ -417,6 +417,79 @@
                         ]
                     }
                 ]
+            },
+            {
+                id: 11,
+                question: "Question 11. In the middle of an event, if the interpreter realizes that the speaker is giving information which is factually untrue or might be harmful, how should he/she behave?",
+                sections: [
+                    {
+                        title: "The 'Mailman' Rule (Just deliver the message)",
+                        lines: [
+                            { en: "Imagine this scenario: You are in the middle of interpreting, and suddenly you realize the speaker is saying something factually untrue or even harmful. What should you do?", ipa: "/ɪˈmadʒɪn ðɪs sɪˈnɑːrɪəʊ: juː ɑːr ɪn ðə ˈmɪdl ɒv ɪnˈtɜːprɪtɪŋ, ənd ˈsʌdnli juː ˈrɪəlaɪz ðə ˈspiːkər ɪz ˈseɪɪŋ ˈsʌmθɪŋ ˈfæktʃuəli ʌnˈtruː ɔːr ˈiːvn ˈhɑːmfʊl. wɒt ʃʊd juː duː?/" },
+                            { en: "The answer is simple but strict: You must still keep interpreting.", ipa: "/ði ˈɑːnsər ɪz ˈsɪmpl bʌt strɪkt: juː mʌst stɪl kiːp ɪnˈtɜːprɪtɪŋ./" },
+                            { en: "You continue to translate normally and faithfully.", ipa: "/juː kənˈtɪnjuː tuː trænzˈleɪt ˈnɔːməli ənd ˈfeɪθfʊli./" },
+                            { en: "Let me explain why. In this profession, the rule is that the interpreter is not responsible for the content of the speech.", ipa: "/lɛt miː ɪksˈpleɪn waɪ. ɪn ðɪs prəˈfɛʃən, ðə ruːl ɪz ðæt ði ɪnˈtɜːprɪtər ɪz nɒt rɪsˈpɒnsəbl fɔː ðə ˈkɒntɛnt ɒv ðə spiːtʃ./" },
+                            { en: "Think of yourself as a messenger. Your only duty is to remain faithful to the speaker's words, regardless of whether that information is true or false.", ipa: "/θɪŋk ɒv jɔːˈsɛlf æz ə ˈmɛsɪndʒər. jɔːr ˈəʊnli ˈdjuːti ɪz tuː rɪˈmeɪn ˈfeɪθfʊl tuː ðə ˈspiːkəz wɜːdz, rɪˈɡɑːdləs ɒv wɛðə ðæt ˌɪnfəˈmeɪʃən ɪz truː ɔː fɔːls./" }
+                        ]
+                    }
+                ]
+            },
+            {
+                id: 12,
+                question: "Question 12. How do you explain the following paradox: \"In order to be faithful to the speaker, the interpreter has to betray them\"?",
+                sections: [
+                    {
+                        title: "Betray Word -> Save Meaning",
+                        lines: [
+                            { en: "This sounds like a contradiction, right? How can you be faithful by betraying?", ipa: "/ðɪs saʊndz laɪk ə ˌkɒntrəˈdɪkʃən, raɪt? haʊ kæn juː biː ˈfeɪθfʊl baɪ bɪˈtreɪɪŋ?/" },
+                            { en: "The explanation is: To be faithful to the meaning, you sometimes have to betray the words or grammar.", ipa: "/ði ˌɛkspləˈneɪʃən ɪz: tuː biː ˈfeɪθfʊl tuː ðə ˈmiːnɪŋ, juː ˈsʌmtaɪmz hæv tuː bɪˈtreɪ ðə wɜːdz ɔː ˈɡræmə./" },
+                            { en: "Here is the story behind it: It comes down to cultural differences. Sometimes, a phrase is positive in the Source Language but becomes negative if translated literally into the Target Language.", ipa: "/hɪər ɪz ðə ˈstɔːri bɪˈhaɪnd ɪt: ɪt kʌmz daʊn tuː ˈkʌltʃərəl ˈdɪfrənsɪz. ˈsʌmtaɪmz, ə freɪz ɪz ˈpɒzətɪv ɪn ðə sɔːs ˈlæŋɡwɪdʒ bʌt bɪˈkʌmz ˈnɛɡətɪv ɪf trænzˈleɪtɪd ˈlɪtərəli ˈɪntuː ðə ˈtɑːɡɪt ˈlæŋɡwɪdʒ./" },
+                            { en: "So, to keep the 'spirit' of the message, you must change the words.", ipa: "/səʊ, tuː kiːp ðə ˈspɪrɪt ɒv ðə ˈmɛsɪdʒ, juː mʌst tʃeɪndʒ ðə wɜːdz./" },
+                            { en: "Let me give you a real-life example: In Western culture, people are very casual. After a few meetings, they might drop titles like 'Mr.' and just say: 'Minh, I have something to argue.'", ipa: "/lɛt miː ɡɪv juː ə rɪəl-laɪf ɪɡˈzɑːmpl: ɪn ˈwɛstən ˈkʌltʃə, ˈpiːpl ɑː ˈvɛri ˈkæʒjʊəl. ˈɑːftər ə fjuː ˈmiːtɪŋz, ðeɪ maɪt drɒp ˈtaɪtlz laɪk ˈmɪstər ənd dʒʌst seɪ: mɪn, aɪ hæv ˈsʌmθɪŋ tuː ˈɑːɡjuː./" },
+                            { en: "If I translate this literally into Vietnamese as just 'Minh', it sounds rude and disrespectful to an older person.", ipa: "/ɪf aɪ trænzˈleɪt ðɪs ˈlɪtərəli ˈɪntuː vjɛtnəˈmiːz æz dʒʌst mɪn, ɪt saʊndz ruːd ənd ˌdɪsrɪsˈpɛktfʊl tuː ən ˈəʊldə ˈpɜːsn./" },
+                            { en: "So, I have to 'betray' the English word structure by adding a title like 'Anh Minh' or 'Chú Minh'.", ipa: "/səʊ, aɪ hæv tuː bɪˈtreɪ ði ˈɪŋɡlɪʃ wɜːd ˈstrʌktʃə baɪ ˈædɪŋ ə ˈtaɪtl laɪk æn mɪn ɔː tʃuː mɪn./" },
+                            { en: "By doing that, I betray the grammar, but I remain faithful to the respectful tone the speaker intended.", ipa: "/baɪ ˈdu(ː)ɪŋ ðæt, aɪ bɪˈtreɪ ðə ˈɡræmə, bʌt aɪ rɪˈmeɪn ˈfeɪθfʊl tuː ðə rɪsˈpɛktfʊl təʊn ðə ˈspiːkər ɪnˈtɛndɪd./" }
+                        ]
+                    }
+                ]
+            },
+            {
+                id: 13,
+                question: "Question 13. To prepare for the event, what should an interpreter do after receiving the materials?",
+                sections: [
+                    {
+                        title: "The 'Chef' Preparation",
+                        lines: [
+                            { en: "Imagine you have just received the scripts and slides from the client. Your job isn't done; it's just starting.", ipa: "/ɪˈmadʒɪn juː hæv dʒʌst rɪˈsiːvd ðə skrɪpts ənd slaɪdz frɒm ðə ˈklaɪənt. jɔː dʒɒb ˈɪznt dʌn; ɪts dʒʌst ˈstɑːtɪŋ./" },
+                            { en: "There are two main steps you must take immediately:", ipa: "/ðeər ɑː tuː meɪn stɛps juː mʌst teɪk ɪˈmiːdiətli:/" },
+                            { en: "Step 1 is like preparing your ingredients. You must scan the documents and list the vocabulary items (in both SL and TL).", ipa: "/stɛp wʌn ɪz laɪk prɪˈpeərɪŋ jɔːr ɪnˈɡriːdiənts. juː mʌst skæn ðə ˈdɒkjʊmənts ənd lɪst ðə vəˈkæbjʊləri ˈaɪtəmz (ɪn bəʊθ ɛs-ɛl ənd tiː-ɛl)./" },
+                            { en: "You need to find equivalent words, especially for technical terms.", ipa: "/juː niːd tuː faɪnd ɪˈkwɪvələnt wɜːdz, ɪˈspɛʃəli fɔː ˈtɛknɪkəl tɜːmz./" },
+                            { en: "Why? Because you want to avoid those awkward or embarrassing moments where you get stuck on stage.", ipa: "/waɪ? bɪˈkɒz juː wɒnt tuː əˈvɔɪd ðəʊz ˈɔːkwəd ɔːr ɪmˈbærəsɪŋ ˈməʊmənts weə juː ɡɛt stʌk ɒn steɪdʒ./" },
+                            { en: "Step 2 is organizing your kitchen. You need to sort out and order the materials suitably depending on the event schedule.", ipa: "/stɛp tuː ɪz ˈɔːɡənaɪzɪŋ jɔː ˈkɪtʃɪn. juː niːd tuː sɔːt aʊt ənd ˈɔːdə ðə məˈtɪəriəlz ˈsuːtəbli dɪˈpɛndɪŋ ɒn ði ɪˈvɛnt ˈʃɛdjuːl./" },
+                            { en: "Why? So that when you are under pressure, you can find the exact document you need on the spot without panicking.", ipa: "/waɪ? səʊ ðæt wɛn juː ɑːr ˈʌndə ˈprɛʃə, juː kæn faɪnd ði ɪɡˈzækt ˈdɒkjʊmənt juː niːd ɒn ðə spɒt wɪˈðaʊt ˈpænɪkɪŋ./" }
+                        ]
+                    }
+                ]
+            },
+            {
+                id: 14,
+                question: "Question 14. Why are interpreters advised to be punctual or even get to the event early?",
+                sections: [
+                    {
+                        title: "The 'Professional Stage' (Respect, Check, Calm)",
+                        lines: [
+                            { en: "Let's talk about punctuality. Why do we always have to arrive early?", ipa: "/lɛts tɔːk əˈbaʊt ˌpʌŋktʃuˈæləti. waɪ duː wiː ˈɔːlweɪz hæv tuː əˈraɪv ˈɜːli?/" },
+                            { en: "It's not just about watching the clock; it's about four key values:", ipa: "/ɪts nɒt dʒʌst əˈbaʊt ˈwɒtʃɪŋ ðə klɒk; ɪts əˈbaʊt fɔː kiː ˈvæljuːz:/" },
+                            { en: "First, it's about Image. Arriving early shows a professional manner.", ipa: "/fɜːst, ɪts əˈbaʊt ˈɪmɪdʒ. əˈraɪvɪŋ ˈɜːli ʃəʊz ə prəˈfɛʃənl ˈmænə./" },
+                            { en: "Second, it's about Respect. It shows you respect the speakers, the audience, and your client.", ipa: "/ˈsɛkənd, ɪts əˈbaʊt rɪˈspɛkt. ɪt ʃəʊz juː rɪˈspɛkt ðə ˈspiːkəz, ði ˈɔːdiəns, ənd jɔː ˈklaɪənt./" },
+                            { en: "Third, it's about Control. You need time to check the facility (like the microphone, the chair) and arrange your documents.", ipa: "/θɜːd, ɪts əˈbaʊt kənˈtrəʊl. juː niːd taɪm tuː tʃɛk ðə fəˈsɪlɪti (laɪk ðə ˈmaɪkrəfəʊn, ðə tʃeə) ənd əˈreɪndʒ jɔː ˈdɒkjʊmənts./" },
+                            { en: "You want to make sure everything is perfect before the show starts.", ipa: "/juː wɒnt tuː meɪk ʃʊər ˈɛvrɪθɪŋ ɪz ˈpɜːfɪkt bɪˈfɔː ðə ʃəʊ stɑːts./" },
+                            { en: "And finally, it's about Psychology. Arriving early gives you time to calm down and regain your composure.", ipa: "/ənd ˈfaɪnəli, ɪts əˈbaʊt saɪˈkɒlədʒi. əˈraɪvɪŋ ˈɜːli ɡɪvz juː taɪm tuː kɑːm daʊn ənd rɪˈɡeɪn jɔː kəmˈpəʊʒə./" },
+                            { en: "When you are calm, you are confident. When you are confident, you perform better.", ipa: "/wɛn juː ɑː kɑːm, juː ɑː ˈkɒnfɪdənt. wɛn juː ɑː ˈkɒnfɪdənt, juː pəˈfɔːm ˈbɛtə./" },
+                            { en: "In short, if the interpreter is late, the whole event is delayed.", ipa: "/ɪn ʃɔːt, ɪf ði ɪnˈtɜːprɪtər ɪz leɪt, ðə həʊl ɪˈvɛnt ɪz dɪˈleɪd./" }
+                        ]
+                    }
+                ]
             }
         ];
 
