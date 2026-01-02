@@ -8,15 +8,20 @@
     <script src="https://cdn.tailwindcss.com"></script>
 
     <style>
-        /* Hiệu ứng 3D lật thẻ */
+        /* CẤU HÌNH 3D LẬT THẺ (Đã sửa lỗi hiển thị xuyên thấu) */
         .perspective-1000 {
             perspective: 1000px;
         }
         .transform-style-3d {
             transform-style: preserve-3d;
+            -webkit-transform-style: preserve-3d; /* Fix cho Safari */
         }
         .backface-hidden {
+            -webkit-backface-visibility: hidden; /* Fix quan trọng: Ẩn mặt sau */
             backface-visibility: hidden;
+            /* Hack để trình duyệt render lớp riêng biệt, tránh lỗi chữ nhòe */
+            -webkit-transform: translate3d(0,0,0);
+            transform: translate3d(0,0,0);
         }
         .rotate-y-180 {
             transform: rotateY(180deg);
@@ -40,7 +45,7 @@
             border-radius: 4px;
         }
         
-        /* Font chữ riêng cho IPA để hiển thị ký tự đặc biệt tốt hơn */
+        /* Font chữ riêng cho IPA */
         .font-ipa {
             font-family: "Lucida Sans Unicode", "Arial Unicode MS", "Times New Roman", serif;
         }
@@ -48,6 +53,12 @@
         body {
             overscroll-behavior-y: none;
             -webkit-tap-highlight-color: transparent;
+        }
+        
+        /* Hiệu ứng khi bấm nút audio */
+        .btn-audio:active {
+            transform: scale(0.9);
+            background-color: #dbeafe;
         }
     </style>
 </head>
@@ -83,10 +94,11 @@
         <div id="card-inner" class="card-inner relative w-full h-full transform-style-3d shadow-xl rounded-2xl bg-white">
             
             <!-- FRONT FACE (Mặt trước - Câu hỏi) -->
-            <div class="absolute w-full h-full backface-hidden bg-white rounded-2xl p-6 sm:p-10 flex flex-col items-center justify-center border border-gray-200 text-center">
+            <!-- Đã thêm 'z-20' và màu nền 'bg-white' rõ ràng để che mặt sau -->
+            <div class="absolute w-full h-full backface-hidden bg-white rounded-2xl p-6 sm:p-10 flex flex-col items-center justify-center border border-gray-200 text-center z-20">
                 <span class="absolute top-4 left-4 sm:top-6 sm:left-6 text-xs font-bold uppercase tracking-wider text-blue-600 bg-blue-100 px-3 py-1 rounded-full shadow-sm">Question</span>
                 
-                <div class="flex flex-col items-center w-full z-10">
+                <div class="flex flex-col items-center w-full">
                     <div id="question-number-display" class="text-5xl sm:text-7xl font-black text-blue-50 mb-4 sm:mb-6 select-none transition-all">1</div>
                     <h2 id="question-text" class="text-lg sm:text-2xl font-bold text-gray-800 leading-snug px-2">
                         How do you define interpreting?
@@ -103,6 +115,7 @@
             </div>
 
             <!-- BACK FACE (Mặt sau - Câu trả lời) -->
+            <!-- Đã thêm 'rotate-y-180' và 'bg-slate-50' -->
             <div class="absolute w-full h-full backface-hidden rotate-y-180 bg-slate-50 rounded-2xl p-0 overflow-hidden border border-slate-200 text-left flex flex-col">
                 <!-- Sticky Header cho mặt sau -->
                 <div class="bg-white px-4 py-3 sm:px-6 sm:py-4 border-b border-slate-100 flex justify-between items-center shadow-sm z-20 shrink-0">
@@ -111,7 +124,7 @@
                 </div>
 
                 <!-- Nội dung cuộn -->
-                <div id="answer-content" class="flex-1 overflow-y-auto p-4 sm:p-8 custom-scrollbar space-y-4">
+                <div id="answer-content" class="flex-1 overflow-y-auto p-4 sm:p-8 custom-scrollbar space-y-4 bg-slate-50">
                     <!-- Nội dung sẽ được JS điền vào -->
                 </div>
             </div>
@@ -429,12 +442,12 @@
                             <div class="group mb-3">
                                 <div class="flex items-start gap-3">
                                     <button 
-                                        onclick="event.stopPropagation(); speakText('${line.en.replace(/'/g, "\\'")}')" 
-                                        class="shrink-0 mt-0.5 w-6 h-6 flex items-center justify-center rounded-full bg-blue-100 text-blue-600 hover:bg-blue-200 transition-colors"
+                                        onclick="event.stopPropagation(); speakText('${line.en.replace(/'/g, "\\\\'").replace(/"/g, "&quot;")}')" 
+                                        class="btn-audio shrink-0 mt-0.5 w-8 h-8 flex items-center justify-center rounded-full bg-blue-100 text-blue-600 hover:bg-blue-200 transition-colors shadow-sm"
                                         aria-label="Listen"
                                         title="Listen (UK)"
                                     >
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg>
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg>
                                     </button>
                                     <div>
                                         <p class="text-gray-800 text-sm sm:text-base leading-relaxed font-medium mb-1">${line.en}</p>
