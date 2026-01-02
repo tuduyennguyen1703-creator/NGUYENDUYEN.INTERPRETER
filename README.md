@@ -8,12 +8,12 @@
     <!-- 1. Tải Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     
-    <!-- 2. Tải React và ReactDOM (Phiên bản ổn định từ cdnjs) -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/umd/react.production.min.js" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.production.min.js" crossorigin="anonymous"></script>
+    <!-- 2. Tải React và ReactDOM (Dùng unpkg để ổn định hơn cho file local) -->
+    <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
     
     <!-- 3. Tải Babel để xử lý JSX -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/7.23.5/babel.min.js" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
 
     <style>
         /* Hiệu ứng 3D */
@@ -48,17 +48,42 @@
             overscroll-behavior-y: none;
             -webkit-tap-highlight-color: transparent;
         }
+        /* Loading Error State */
+        #error-message {
+            display: none;
+        }
     </style>
 </head>
 <body class="bg-gray-100 text-slate-800">
     <!-- Container chính để React render vào -->
     <div id="root" class="min-h-screen flex items-center justify-center">
-        <div class="text-center p-4">
+        <div id="loading-state" class="text-center p-4">
             <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
             <p class="text-gray-600">Đang tải Flashcards...</p>
-            <p class="text-xs text-gray-400 mt-2">(Vui lòng kiểm tra kết nối internet để tải thư viện)</p>
+            <p class="text-xs text-gray-400 mt-2">(Đang kết nối thư viện React...)</p>
+        </div>
+        <div id="error-message" class="text-center p-4 text-red-600 bg-red-50 rounded-lg border border-red-200">
+            <h3 class="font-bold text-lg mb-2">Không thể tải ứng dụng</h3>
+            <p>Vui lòng kiểm tra kết nối internet của bạn.</p>
+            <p class="text-xs mt-2">React hoặc Babel không tải được từ CDN.</p>
         </div>
     </div>
+
+    <!-- Script kiểm tra lỗi tải thư viện -->
+    <script>
+        window.onload = function() {
+            setTimeout(function() {
+                // Nếu sau 3 giây mà React chưa chạy (root chưa có nội dung thay đổi), hiện thông báo lỗi
+                var root = document.getElementById('root');
+                if (root && root.innerHTML.includes('Đang tải Flashcards')) {
+                    if (typeof React === 'undefined' || typeof ReactDOM === 'undefined') {
+                        document.getElementById('loading-state').style.display = 'none';
+                        document.getElementById('error-message').style.display = 'block';
+                    }
+                }
+            }, 5000);
+        };
+    </script>
 
     <!-- Script chính chứa mã React -->
     <script type="text/babel" data-presets="env,react">
