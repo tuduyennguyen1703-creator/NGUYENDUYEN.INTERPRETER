@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Interpreting Flashcards (Full IPA)</title>
+    <title>Interpreting Flashcards (Full IPA + Audio)</title>
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
 
@@ -107,7 +107,7 @@
                 <!-- Sticky Header cho mặt sau -->
                 <div class="bg-white px-4 py-3 sm:px-6 sm:py-4 border-b border-slate-100 flex justify-between items-center shadow-sm z-20 shrink-0">
                     <span class="text-xs font-bold uppercase tracking-wider text-white bg-green-500 px-3 py-1 rounded-full shadow-sm">Answer</span>
-                    <span class="text-[10px] sm:text-xs text-gray-400 italic">Full IPA Transcription</span>
+                    <span class="text-[10px] sm:text-xs text-gray-400 italic">Full IPA + UK Audio</span>
                 </div>
 
                 <!-- Nội dung cuộn -->
@@ -365,6 +365,42 @@
         const progressText = document.getElementById('progress-text');
         const flipBtn = document.getElementById('flip-btn');
 
+        // Text-to-Speech Function (UK Voice preference)
+        function speakText(text) {
+            if (!window.speechSynthesis) {
+                alert("Browser does not support text-to-speech.");
+                return;
+            }
+            
+            // Stop any current speech
+            window.speechSynthesis.cancel();
+
+            const utterance = new SpeechSynthesisUtterance(text);
+            utterance.lang = 'en-GB'; // Default request for British English
+
+            // Try to find a specific high-quality UK voice
+            const voices = window.speechSynthesis.getVoices();
+            const ukVoice = voices.find(voice => 
+                voice.lang === 'en-GB' || 
+                voice.name.includes('UK') || 
+                voice.name.includes('British')
+            );
+
+            if (ukVoice) {
+                utterance.voice = ukVoice;
+            }
+
+            utterance.rate = 0.9; // Slightly slower for clarity
+            window.speechSynthesis.speak(utterance);
+        }
+
+        // Initialize voices (Chrome requires this to load voices)
+        if (window.speechSynthesis) {
+            window.speechSynthesis.onvoiceschanged = () => {
+                window.speechSynthesis.getVoices();
+            };
+        }
+
         function updateCard() {
             const card = cards[currentIndex];
             
@@ -390,9 +426,21 @@
                     </h3>
                     <div class="space-y-4">
                         ${section.lines.map(line => `
-                            <div class="group">
-                                <p class="text-gray-800 text-sm sm:text-base leading-relaxed font-medium mb-1">${line.en}</p>
-                                <p class="font-ipa text-slate-500 text-xs sm:text-sm bg-slate-50 px-2 py-1 rounded inline-block border border-slate-100 select-all">${line.ipa}</p>
+                            <div class="group mb-3">
+                                <div class="flex items-start gap-3">
+                                    <button 
+                                        onclick="event.stopPropagation(); speakText('${line.en.replace(/'/g, "\\'")}')" 
+                                        class="shrink-0 mt-0.5 w-6 h-6 flex items-center justify-center rounded-full bg-blue-100 text-blue-600 hover:bg-blue-200 transition-colors"
+                                        aria-label="Listen"
+                                        title="Listen (UK)"
+                                    >
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg>
+                                    </button>
+                                    <div>
+                                        <p class="text-gray-800 text-sm sm:text-base leading-relaxed font-medium mb-1">${line.en}</p>
+                                        <p class="font-ipa text-slate-500 text-xs sm:text-sm bg-slate-50 px-2 py-1 rounded inline-block border border-slate-100 select-all">${line.ipa}</p>
+                                    </div>
+                                </div>
                             </div>
                         `).join('')}
                     </div>
