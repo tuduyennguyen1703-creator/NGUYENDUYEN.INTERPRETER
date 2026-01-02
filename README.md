@@ -3,23 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Interpreting Flashcards (Full IPA + Audio)</title>
+    <title>Interpreting Flashcards (Full IPA + Audio + Settings)</title>
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
 
     <style>
-        /* CẤU HÌNH 3D LẬT THẺ (Đã sửa lỗi hiển thị xuyên thấu) */
+        /* CẤU HÌNH 3D LẬT THẺ */
         .perspective-1000 {
             perspective: 1000px;
         }
         .transform-style-3d {
             transform-style: preserve-3d;
-            -webkit-transform-style: preserve-3d; /* Fix cho Safari */
+            -webkit-transform-style: preserve-3d;
         }
         .backface-hidden {
-            -webkit-backface-visibility: hidden; /* Fix quan trọng: Ẩn mặt sau */
+            -webkit-backface-visibility: hidden;
             backface-visibility: hidden;
-            /* Hack để trình duyệt render lớp riêng biệt, tránh lỗi chữ nhòe */
+            /* Fix lỗi hiển thị trên một số màn hình */
             -webkit-transform: translate3d(0,0,0);
             transform: translate3d(0,0,0);
         }
@@ -27,12 +27,11 @@
             transform: rotateY(180deg);
         }
         
-        /* Hiệu ứng chuyển động mượt mà */
         .card-inner {
             transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
-        /* Thanh cuộn tùy chỉnh */
+        /* Thanh cuộn mượt */
         .custom-scrollbar::-webkit-scrollbar {
             width: 6px;
         }
@@ -45,33 +44,46 @@
             border-radius: 4px;
         }
         
-        /* Font chữ riêng cho IPA */
         .font-ipa {
             font-family: "Lucida Sans Unicode", "Arial Unicode MS", "Times New Roman", serif;
         }
 
+        /* Loại bỏ overscroll-behavior chặn cuộn trên body để tránh kẹt trên mobile */
         body {
-            overscroll-behavior-y: none;
             -webkit-tap-highlight-color: transparent;
         }
+
+        /* Hiệu ứng nút */
+        .btn-active:active {
+            transform: scale(0.95);
+        }
         
-        /* Hiệu ứng khi bấm nút audio */
-        .btn-audio:active {
+        /* Modal Animation */
+        .modal-enter {
+            opacity: 0;
             transform: scale(0.9);
-            background-color: #dbeafe;
+        }
+        .modal-enter-active {
+            opacity: 1;
+            transform: scale(1);
+            transition: opacity 0.2s, transform 0.2s;
         }
     </style>
 </head>
-<body class="bg-slate-100 text-slate-800 font-sans min-h-screen flex flex-col items-center py-4 px-3 sm:py-6 sm:px-4">
+<body class="bg-slate-100 text-slate-800 font-sans min-h-screen flex flex-col items-center py-4 px-3 sm:py-6 sm:px-4 relative">
 
-    <!-- Header -->
-    <header class="mb-4 sm:mb-6 text-center">
+    <!-- Header & Settings Button -->
+    <header class="mb-4 sm:mb-6 text-center w-full max-w-2xl relative">
         <div class="flex items-center justify-center gap-2 mb-2">
-            <!-- Icon Mũ cử nhân -->
             <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 sm:w-8 sm:h-8 text-blue-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 0 6-3 6-3s-3-3-6-3"/></svg>
             <h1 class="text-xl sm:text-3xl font-bold text-gray-800">Interpreting Review</h1>
         </div>
         <p class="text-xs sm:text-base text-gray-500">Subject: Interpreting & Translation Theory</p>
+        
+        <!-- Nút Cài đặt (Gear Icon) -->
+        <button onclick="toggleSettings()" class="absolute right-0 top-0 p-2 text-gray-400 hover:text-blue-600 hover:bg-blue-50 rounded-full transition-colors btn-active" title="Cài đặt giọng đọc">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.1a2 2 0 0 1-1-1.74v-.47a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.35a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/><circle cx="12" cy="12" r="3"/></svg>
+        </button>
     </header>
 
     <!-- Progress Info -->
@@ -89,43 +101,46 @@
     </div>
 
     <!-- Main Card Container -->
-    <div class="relative w-full max-w-2xl h-[70vh] sm:h-[600px] perspective-1000 group cursor-pointer" onclick="flipCard()">
+    <div class="relative w-full max-w-2xl h-[70vh] sm:h-[600px] perspective-1000 group">
         <!-- Card Inner -->
         <div id="card-inner" class="card-inner relative w-full h-full transform-style-3d shadow-xl rounded-2xl bg-white">
             
             <!-- FRONT FACE (Mặt trước - Câu hỏi) -->
-            <!-- Đã thêm 'z-20' và màu nền 'bg-white' rõ ràng để che mặt sau -->
-            <div class="absolute w-full h-full backface-hidden bg-white rounded-2xl p-6 sm:p-10 flex flex-col items-center justify-center border border-gray-200 text-center z-20">
+            <!-- Thêm id="front-face" để JS điều khiển pointer-events -->
+            <div id="front-face" class="absolute w-full h-full backface-hidden bg-white rounded-2xl p-6 sm:p-10 flex flex-col items-center justify-center border border-gray-200 text-center z-20 cursor-pointer" onclick="flipCard()">
                 <span class="absolute top-4 left-4 sm:top-6 sm:left-6 text-xs font-bold uppercase tracking-wider text-blue-600 bg-blue-100 px-3 py-1 rounded-full shadow-sm">Question</span>
                 
                 <div class="flex flex-col items-center w-full">
                     <div id="question-number-display" class="text-5xl sm:text-7xl font-black text-blue-50 mb-4 sm:mb-6 select-none transition-all">1</div>
-                    <h2 id="question-text" class="text-lg sm:text-2xl font-bold text-gray-800 leading-snug px-2">
+                    <h2 id="question-text" class="text-lg sm:text-2xl font-bold text-gray-800 leading-snug px-2 select-none">
                         How do you define interpreting?
                     </h2>
                 </div>
                 
-                <div class="absolute bottom-6 sm:bottom-8 text-gray-400 text-xs sm:text-sm flex items-center gap-2 animate-bounce font-medium">
+                <div class="absolute bottom-6 sm:bottom-8 text-gray-400 text-xs sm:text-sm flex items-center gap-2 animate-bounce font-medium select-none">
                     <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-9-9c2.52 0 4.93 1 6.74 2.74L21 8"/><path d="M21 3v5h-5"/></svg>
                     Tap to Flip
                 </div>
                 
-                <!-- Background decoration -->
                 <div class="absolute inset-0 bg-gradient-to-br from-transparent to-blue-50 opacity-50 rounded-2xl pointer-events-none"></div>
             </div>
 
             <!-- BACK FACE (Mặt sau - Câu trả lời) -->
-            <!-- Đã thêm 'rotate-y-180' và 'bg-slate-50' -->
-            <div class="absolute w-full h-full backface-hidden rotate-y-180 bg-slate-50 rounded-2xl p-0 overflow-hidden border border-slate-200 text-left flex flex-col">
-                <!-- Sticky Header cho mặt sau -->
-                <div class="bg-white px-4 py-3 sm:px-6 sm:py-4 border-b border-slate-100 flex justify-between items-center shadow-sm z-20 shrink-0">
+            <!-- Thêm id="back-face" để JS điều khiển pointer-events -->
+            <div id="back-face" class="absolute w-full h-full backface-hidden rotate-y-180 bg-slate-50 rounded-2xl p-0 overflow-hidden border border-slate-200 text-left flex flex-col pointer-events-none">
+                <!-- Sticky Header -->
+                <div class="bg-white px-4 py-3 sm:px-6 sm:py-4 border-b border-slate-100 flex justify-between items-center shadow-sm z-30 shrink-0 cursor-pointer" onclick="flipCard()">
                     <span class="text-xs font-bold uppercase tracking-wider text-white bg-green-500 px-3 py-1 rounded-full shadow-sm">Answer</span>
-                    <span class="text-[10px] sm:text-xs text-gray-400 italic">Full IPA + UK Audio</span>
+                    <div class="flex items-center gap-1 text-[10px] sm:text-xs text-gray-400 italic">
+                        <span>Tap header to flip back</span>
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-3 h-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 14.899A7 7 0 1 1 15.71 8h1.79a4.5 4.5 0 0 1 2.5 8.242"/><path d="M12 12v9"/><path d="m16 16-4-4-4 4"/></svg>
+                    </div>
                 </div>
 
                 <!-- Nội dung cuộn -->
-                <div id="answer-content" class="flex-1 overflow-y-auto p-4 sm:p-8 custom-scrollbar space-y-4 bg-slate-50">
-                    <!-- Nội dung sẽ được JS điền vào -->
+                <!-- Thêm touch-action: pan-y để đảm bảo cuộn mượt trên mobile -->
+                <div id="answer-content" class="flex-1 overflow-y-auto p-4 sm:p-8 custom-scrollbar space-y-4 bg-slate-50" style="touch-action: pan-y;">
+                    <!-- Nội dung JS -->
                 </div>
             </div>
         </div>
@@ -133,17 +148,56 @@
 
     <!-- Controls -->
     <div class="flex items-center gap-3 sm:gap-4 mt-4 sm:mt-8 w-full justify-center pb-4 sm:pb-8">
-        <button onclick="event.stopPropagation(); prevCard()" class="p-3 sm:p-4 rounded-full bg-white shadow-lg hover:bg-blue-50 active:bg-blue-100 text-gray-600 hover:text-blue-600 transition-all border border-gray-100 hover:scale-105">
+        <button onclick="prevCard()" class="p-3 sm:p-4 rounded-full bg-white shadow-lg hover:bg-blue-50 active:bg-blue-100 text-gray-600 hover:text-blue-600 transition-all border border-gray-100 hover:scale-105 btn-active">
             <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 sm:w-6 sm:h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
         </button>
 
-        <button onclick="event.stopPropagation(); flipCard()" id="flip-btn" class="flex-1 max-w-[180px] sm:max-w-[200px] px-4 py-3 sm:px-6 sm:py-4 rounded-full bg-blue-600 text-white text-sm sm:text-base font-bold shadow-xl hover:bg-blue-700 active:scale-95 transition-all hover:shadow-2xl ring-offset-2 focus:ring-2 ring-blue-500">
+        <button onclick="flipCard()" id="flip-btn" class="flex-1 max-w-[180px] sm:max-w-[200px] px-4 py-3 sm:px-6 sm:py-4 rounded-full bg-blue-600 text-white text-sm sm:text-base font-bold shadow-xl hover:bg-blue-700 active:scale-95 transition-all hover:shadow-2xl ring-offset-2 focus:ring-2 ring-blue-500 btn-active">
             Show Answer
         </button>
 
-        <button onclick="event.stopPropagation(); nextCard()" class="p-3 sm:p-4 rounded-full bg-white shadow-lg hover:bg-blue-50 active:bg-blue-100 text-gray-600 hover:text-blue-600 transition-all border border-gray-100 hover:scale-105">
+        <button onclick="nextCard()" class="p-3 sm:p-4 rounded-full bg-white shadow-lg hover:bg-blue-50 active:bg-blue-100 text-gray-600 hover:text-blue-600 transition-all border border-gray-100 hover:scale-105 btn-active">
             <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 sm:w-6 sm:h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
         </button>
+    </div>
+
+    <!-- SETTINGS MODAL -->
+    <div id="settings-modal" class="fixed inset-0 bg-black/50 z-50 hidden flex items-center justify-center p-4 backdrop-blur-sm">
+        <div class="bg-white rounded-2xl shadow-2xl w-full max-w-sm p-6 transform transition-all scale-95 opacity-0" id="modal-content">
+            <div class="flex justify-between items-center mb-4 border-b pb-2">
+                <h3 class="text-lg font-bold text-gray-800 flex items-center gap-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-blue-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.1a2 2 0 0 1-1-1.74v-.47a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.35a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/><circle cx="12" cy="12" r="3"/></svg>
+                    Cài đặt Giọng đọc
+                </h3>
+                <button onclick="toggleSettings()" class="text-gray-400 hover:text-red-500 p-1">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                </button>
+            </div>
+            
+            <div class="space-y-4">
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Chọn Giọng (Voice)</label>
+                    <select id="voice-select" class="w-full p-2 border border-gray-300 rounded-lg text-sm bg-gray-50 focus:ring-2 focus:ring-blue-500 outline-none">
+                        <option value="">Đang tải danh sách giọng...</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Tốc độ (Speed)</label>
+                    <div class="flex items-center gap-3">
+                        <span class="text-xs text-gray-500 w-8">0.5x</span>
+                        <input type="range" id="rate-range" min="0.5" max="1.5" step="0.1" value="0.9" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-blue-600">
+                        <span class="text-xs text-gray-500 w-8">1.5x</span>
+                    </div>
+                    <div class="text-center text-xs text-blue-600 font-bold mt-1" id="rate-value">0.9x</div>
+                </div>
+            </div>
+
+            <div class="mt-6 flex gap-2">
+                <button onclick="testVoice()" class="flex-1 py-2 px-4 bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-lg text-sm font-medium transition-colors">Test</button>
+                <button onclick="saveSettings()" class="flex-1 py-2 px-4 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-sm font-medium transition-colors shadow-md">Lưu & Đóng</button>
+            </div>
+        </div>
     </div>
 
     <!-- JAVASCRIPT LOGIC -->
@@ -368,59 +422,160 @@
 
         let currentIndex = 0;
         let isFlipped = false;
+        let selectedVoiceURI = localStorage.getItem('preferredVoice') || '';
+        let speechRate = parseFloat(localStorage.getItem('speechRate')) || 0.9;
 
         // Elements
         const cardInner = document.getElementById('card-inner');
+        const frontFace = document.getElementById('front-face');
+        const backFace = document.getElementById('back-face');
         const questionText = document.getElementById('question-text');
         const questionNumDisplay = document.getElementById('question-number-display');
         const answerContent = document.getElementById('answer-content');
         const progressBar = document.getElementById('progress-bar');
         const progressText = document.getElementById('progress-text');
         const flipBtn = document.getElementById('flip-btn');
+        const settingsModal = document.getElementById('settings-modal');
+        const modalContent = document.getElementById('modal-content');
+        const voiceSelect = document.getElementById('voice-select');
+        const rateRange = document.getElementById('rate-range');
+        const rateValue = document.getElementById('rate-value');
 
-        // Text-to-Speech Function (UK Voice preference)
+        // ==== VOICE SETTINGS LOGIC ====
+        
+        function loadVoices() {
+            if (!window.speechSynthesis) return;
+            
+            let voices = window.speechSynthesis.getVoices();
+            if (voices.length === 0) {
+                // Retry if voices aren't loaded yet
+                setTimeout(loadVoices, 100);
+                return;
+            }
+
+            voiceSelect.innerHTML = '';
+            
+            // Prioritize English voices
+            voices.sort((a, b) => {
+                const aName = a.name.toLowerCase();
+                const bName = b.name.toLowerCase();
+                // UK English top priority
+                if (a.lang === 'en-GB' && b.lang !== 'en-GB') return -1;
+                if (b.lang === 'en-GB' && a.lang !== 'en-GB') return 1;
+                // Other English next
+                if (a.lang.startsWith('en') && !b.lang.startsWith('en')) return -1;
+                if (b.lang.startsWith('en') && !a.lang.startsWith('en')) return 1;
+                return aName.localeCompare(bName);
+            });
+
+            voices.forEach(voice => {
+                // Only show English voices to keep list clean, or all if preferred
+                if(voice.lang.startsWith('en')) {
+                    const option = document.createElement('option');
+                    option.value = voice.voiceURI;
+                    option.textContent = `${voice.name} (${voice.lang})`;
+                    if (voice.voiceURI === selectedVoiceURI) {
+                        option.selected = true;
+                    }
+                    voiceSelect.appendChild(option);
+                }
+            });
+
+            // If no voice selected yet, try to auto-select a UK voice
+            if (!selectedVoiceURI) {
+                const ukVoice = voices.find(v => v.lang === 'en-GB');
+                if (ukVoice) {
+                    voiceSelect.value = ukVoice.voiceURI;
+                    selectedVoiceURI = ukVoice.voiceURI;
+                }
+            }
+        }
+
+        // Load voices when they are ready
+        if (window.speechSynthesis) {
+            window.speechSynthesis.onvoiceschanged = loadVoices;
+            loadVoices(); // Init call
+        }
+
+        function toggleSettings() {
+            if (settingsModal.classList.contains('hidden')) {
+                // Open
+                settingsModal.classList.remove('hidden');
+                setTimeout(() => {
+                    modalContent.classList.remove('scale-95', 'opacity-0');
+                    modalContent.classList.add('scale-100', 'opacity-100');
+                }, 10);
+                loadVoices(); // Refresh list just in case
+                rateRange.value = speechRate;
+                rateValue.textContent = speechRate + 'x';
+            } else {
+                // Close
+                modalContent.classList.remove('scale-100', 'opacity-100');
+                modalContent.classList.add('scale-95', 'opacity-0');
+                setTimeout(() => {
+                    settingsModal.classList.add('hidden');
+                }, 200);
+            }
+        }
+
+        rateRange.addEventListener('input', (e) => {
+            speechRate = e.target.value;
+            rateValue.textContent = speechRate + 'x';
+        });
+
+        function saveSettings() {
+            selectedVoiceURI = voiceSelect.value;
+            speechRate = rateRange.value;
+            
+            localStorage.setItem('preferredVoice', selectedVoiceURI);
+            localStorage.setItem('speechRate', speechRate);
+            
+            toggleSettings();
+        }
+
+        function testVoice() {
+            speakText("Hello, this is a test of the selected voice.");
+        }
+
         function speakText(text) {
             if (!window.speechSynthesis) {
-                alert("Browser does not support text-to-speech.");
+                alert("Trình duyệt không hỗ trợ đọc văn bản.");
                 return;
             }
             
-            // Stop any current speech
             window.speechSynthesis.cancel();
 
             const utterance = new SpeechSynthesisUtterance(text);
-            utterance.lang = 'en-GB'; // Default request for British English
-
-            // Try to find a specific high-quality UK voice
+            
+            // Apply settings
             const voices = window.speechSynthesis.getVoices();
-            const ukVoice = voices.find(voice => 
-                voice.lang === 'en-GB' || 
-                voice.name.includes('UK') || 
-                voice.name.includes('British')
-            );
-
-            if (ukVoice) {
-                utterance.voice = ukVoice;
+            const selectedVoice = voices.find(v => v.voiceURI === selectedVoiceURI);
+            
+            if (selectedVoice) {
+                utterance.voice = selectedVoice;
+            } else {
+                // Fallback to any en-GB if specific one not found
+                const ukVoice = voices.find(v => v.lang === 'en-GB');
+                if (ukVoice) utterance.voice = ukVoice;
             }
 
-            utterance.rate = 0.9; // Slightly slower for clarity
+            utterance.rate = parseFloat(speechRate);
             window.speechSynthesis.speak(utterance);
         }
 
-        // Initialize voices (Chrome requires this to load voices)
-        if (window.speechSynthesis) {
-            window.speechSynthesis.onvoiceschanged = () => {
-                window.speechSynthesis.getVoices();
-            };
-        }
+        // ==== CARD LOGIC ====
 
         function updateCard() {
             const card = cards[currentIndex];
             
-            // Reset Flip
+            // Reset Flip State
             isFlipped = false;
             cardInner.classList.remove('rotate-y-180');
             flipBtn.textContent = "Show Answer";
+            
+            // Reset interaction states
+            frontFace.style.pointerEvents = 'auto';
+            backFace.style.pointerEvents = 'none';
 
             // Update Text
             const qNum = card.question.match(/Question (\d+)/);
@@ -430,6 +585,9 @@
             // Update Progress
             progressText.textContent = `Question ${currentIndex + 1} of ${cards.length}`;
             progressBar.style.width = `${((currentIndex + 1) / cards.length) * 100}%`;
+
+            // Scroll to top of answer
+            if(answerContent) answerContent.scrollTop = 0;
 
             // Render Answer
             answerContent.innerHTML = card.sections.map(section => `
@@ -445,7 +603,7 @@
                                         onclick="event.stopPropagation(); speakText('${line.en.replace(/'/g, "\\\\'").replace(/"/g, "&quot;")}')" 
                                         class="btn-audio shrink-0 mt-0.5 w-8 h-8 flex items-center justify-center rounded-full bg-blue-100 text-blue-600 hover:bg-blue-200 transition-colors shadow-sm"
                                         aria-label="Listen"
-                                        title="Listen (UK)"
+                                        title="Nghe"
                                     >
                                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg>
                                     </button>
@@ -464,11 +622,26 @@
         function flipCard() {
             isFlipped = !isFlipped;
             if (isFlipped) {
+                // FLIPPED TO BACK
                 cardInner.classList.add('rotate-y-180');
                 flipBtn.textContent = "Show Question";
+                
+                // IMPORTANT: Disable pointer events on front so back is clickable/scrollable
+                // Timeout matches transition to prevent accidental clicks during flip
+                setTimeout(() => {
+                    frontFace.style.pointerEvents = 'none';
+                    backFace.style.pointerEvents = 'auto';
+                }, 150);
+                
             } else {
+                // FLIPPED TO FRONT
                 cardInner.classList.remove('rotate-y-180');
                 flipBtn.textContent = "Show Answer";
+                
+                setTimeout(() => {
+                    frontFace.style.pointerEvents = 'auto';
+                    backFace.style.pointerEvents = 'none';
+                }, 150);
             }
         }
 
@@ -497,6 +670,13 @@
             if (e.key === ' ' || e.key === 'Enter') {
                 e.preventDefault();
                 flipCard();
+            }
+        });
+
+        // Close modal when clicking outside
+        settingsModal.addEventListener('click', (e) => {
+            if (e.target === settingsModal) {
+                toggleSettings();
             }
         });
 
