@@ -347,7 +347,7 @@
             },
             {
                 id: 7,
-                question: "Question 7. The two basic criteria to evaluate an interpreter's performance.",
+                question: "Question 7. The two basic criteria to evaluate an interpreter's performance are comprehension and delivery. Explain them.",
                 sections: [
                     {
                         title: "Two Basic Criteria",
